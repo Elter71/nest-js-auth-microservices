@@ -1,0 +1,19 @@
+{
+  "private": true,
+  "name": "nest-js-auth-microservices",
+  "workspaces": [
+    "auth",
+    "user"
+  ],
+  "lint-staged": {
+    "*.{ts,tsx,js,jsx}": "yarn workspaces run format && yarn workspaces run lint"
+  },
+  "scripts": {
+    "postinstall": "husky install",
+    "precommit": "lint-staged"
+  },
+  "devDependencies": {
+    "husky": "^7.0.4",
+    "lint-staged": "^11.2.6"
+  }
+}

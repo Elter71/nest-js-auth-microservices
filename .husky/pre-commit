@@ -1,0 +1,14 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+# turn on "eslint --fix on save" for better results
+#
+#    Webstorm:
+#        go to: Preferences | Languages & Frameworks | JavaScript | Code Quality Tools | ESLint or double tap shift key and write "Manual Eslint configuration"
+#        and just check option "Run eslint --fix on save", click apply and then ok.
+#    VisualStudio Code:
+#        go to: File | Preferences | Settings | Workplace | Editor: Code Actions On Save
+#        https://www.digitalocean.com/community/tutorials/workflow-auto-eslinting#adding-vscode-autosave
+#        or https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint#version-2.0.4
+
+yarn run "precommit"
