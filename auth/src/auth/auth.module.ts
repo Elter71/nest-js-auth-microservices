@@ -11,10 +11,9 @@ import { AuthController } from './auth.controller';
     ClientsModule.register([
       {
         name: 'USER_CLIENT',
-        transport: Transport.TCP,
+        transport: Transport.REDIS,
         options: {
-          host: 'localhost',
-          port: 4010,
+          url: 'redis://localhost:6379',
         },
       },
     ]),

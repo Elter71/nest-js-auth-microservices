@@ -11,10 +11,9 @@ import { UserService } from './user.service';
     ClientsModule.register([
       {
         name: 'AUTH_CLIENT',
-        transport: Transport.TCP,
+        transport: Transport.REDIS,
         options: {
-          host: 'localhost',
-          port: 4000,
+          url: 'redis://localhost:6379',
         },
       },
     ]),
