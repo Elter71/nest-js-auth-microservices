@@ -31,8 +31,7 @@ export class AuthService {
           }),
         )
         .toPromise();
-
-      if (compareSync(password, user?.password)) {
+      if (compareSync(password, user?.password || '')) {
         return user;
       }
       return null;
