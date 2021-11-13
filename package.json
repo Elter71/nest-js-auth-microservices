@@ -2,8 +2,7 @@
   "private": true,
   "name": "nest-js-auth-microservices",
   "workspaces": [
-    "auth",
-    "user"
+    "modules/**"
   ],
   "lint-staged": {
     "*.{ts,tsx,js,jsx}": ["eslint --fix", "prettier --write"]

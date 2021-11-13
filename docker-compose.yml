@@ -2,10 +2,12 @@ version: "3.9"
 services:
   db:
     image: "postgres:14.1"
+    volumes:
+      - ./development/db_init.sh:/docker-entrypoint-initdb.d/db_init.sh
     environment:
       POSTGRES_USER: ms-user
       POSTGRES_PASSWORD: ms-user-pass
-      POSTGRES_DB: ms-user
+      POSTGRES_MULTIPLE_DATABASES: ms_user,ms_test
     ports:
       - 5432:5432
   queue:
