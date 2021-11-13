@@ -18,7 +18,7 @@ import { AuthController } from './auth.controller';
         },
       },
     ]),
-    JwtModule.register({ secret: 'xxx', signOptions: { expiresIn: '60s' } }),
+    JwtModule.register({ secret: 'xxx', signOptions: { expiresIn: '7d' } }),
   ],
   providers: [AuthService, LocalStrategy, JwtStrategy],
   controllers: [AuthController],

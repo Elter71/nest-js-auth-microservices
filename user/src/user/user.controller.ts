@@ -1,7 +1,15 @@
-import { Controller, Post, UseGuards,Request } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  UseGuards,
+  Request,
+  Get,
+  Logger,
+} from '@nestjs/common';
 import { MessagePattern } from '@nestjs/microservices';
+import { AuthGuard } from 'src/auth.guard';
 import { User } from './user.entity';
-import { UserService } from './user.service';;
+import { UserService } from './user.service';
 
 @Controller()
 export class UserController {
@@ -14,7 +22,12 @@ export class UserController {
 
   @Post('create')
   async createUser(@Request() req) {
-    console.log('req',req)
     return await this.userService.createUser(req.body);
+  }
+
+  @UseGuards(AuthGuard)
+  @Get('me')
+  async me(@Request() req) {
+    return req.user;
   }
 }

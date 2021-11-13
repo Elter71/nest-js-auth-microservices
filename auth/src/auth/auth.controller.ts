@@ -1,4 +1,5 @@
-import { Controller, Post, UseGuards, Request } from '@nestjs/common';
+import { Controller, Post, UseGuards, Request, Logger } from '@nestjs/common';
+import { MessagePattern } from '@nestjs/microservices';
 import { AuthService } from './auth.service';
 import { LocalAuthGuard } from './local-auth.guard';
 
@@ -12,4 +13,15 @@ export class AuthController {
     return this.authService.login(req.user);
   }
 
+  @MessagePattern({ role: 'auth', cmd: 'check' })
+  async loggedIn(data) {
+    try {
+      const res = this.authService.validateToken(data.jwt);
+      Logger.log(res);
+      return res;
+    } catch (e) {
+      Logger.log(e);
+      return false;
+    }
+  }
 }

@@ -14,7 +14,7 @@ import { catchError, timeout } from 'rxjs/operators';
 export class AuthService {
   constructor(
     @Inject('USER_CLIENT') private readonly client: ClientProxy,
-    private readonly jwtServices: JwtService,
+    private readonly jwtService: JwtService,
   ) {}
 
   async validateUser(username: string, password: string): Promise<any> {
@@ -46,7 +46,11 @@ export class AuthService {
 
     return {
       userId: user.id,
-      accessToken: this.jwtServices.sign(payload),
+      accessToken: this.jwtService.sign(payload),
     };
+  }
+
+  validateToken(jwt: string) {
+    return this.jwtService.verify(jwt);
   }
 }
