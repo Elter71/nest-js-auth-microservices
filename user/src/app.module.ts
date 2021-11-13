@@ -8,6 +8,7 @@ import { UserModule } from './user/user.module';
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: 'localhost',
+
       port: 5432,
       username: 'ms-user',
       password: 'ms-user-pass',

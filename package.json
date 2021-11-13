@@ -6,7 +6,7 @@
     "user"
   ],
   "lint-staged": {
-    "*.{ts,tsx,js,jsx}": ["yarn workspaces run format", "yarn workspaces run lint"]
+    "*.{ts,tsx,js,jsx}": ["eslint --fix", "prettier --write"]
   },
   "scripts": {
     "postinstall": "husky install",
