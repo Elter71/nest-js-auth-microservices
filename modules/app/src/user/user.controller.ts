@@ -1,17 +1,10 @@
-import {
-  Controller,
-  Post,
-  UseGuards,
-  Request,
-  Get,
-  Logger,
-} from '@nestjs/common';
+import { Controller, Post, UseGuards, Request, Get } from '@nestjs/common';
 import { MessagePattern } from '@nestjs/microservices';
 import { AuthGuard } from 'src/auth.guard';
 import { User } from './user.entity';
 import { UserService } from './user.service';
 
-@Controller()
+@Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 

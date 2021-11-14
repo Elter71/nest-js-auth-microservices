@@ -36,7 +36,6 @@ export class User implements UserInterface {
 
   @BeforeInsert()
   async hashPassword() {
-    console.log('password', this.password);
     this.password = await hash(this.password, 10);
   }
 }
