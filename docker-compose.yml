@@ -1,16 +1,72 @@
 version: "3.9"
 services:
+  gateway:
+    image: "nginx:1.21.4"
+    networks:
+      - nesjs-network
+    ports:
+      - 3000:80
   db:
     image: "postgres:14.1"
+    networks:
+      - nesjs-network
     volumes:
       - ./development/db_init.sh:/docker-entrypoint-initdb.d/db_init.sh
+      - pgdata:/var/lib/postgresql/data
     environment:
       POSTGRES_USER: ms-user
       POSTGRES_PASSWORD: ms-user-pass
       POSTGRES_MULTIPLE_DATABASES: ms_user,ms_test
+      PG_DATA: /var/lib/postgresql/data
     ports:
       - 5432:5432
   queue:
     image: "redis:6.2.6"
+    networks:
+      - nesjs-network
     ports:
       - 6379:6379
+  auth:
+    build:
+      context: ./modules/auth
+      target: development
+      dockerfile: ../../development/Dockerfile
+    command: yarn start:dev
+    environment:
+      REDIS_URL: "redis://queue:6379"
+    networks:
+      - nesjs-network
+    depends_on:
+      - queue
+      - db
+    ports:
+      - 3001:3000
+    volumes:
+      - ./modules/auth:/app
+      - /app/node_modules
+  app:
+    build:
+      context: ./modules/app
+      target: development
+      dockerfile: ../../development/Dockerfile
+    command: yarn start:dev
+    environment:
+      REDIS_URL: "redis://queue:6379"
+      DB_HOST: "db"
+      DB_USERNAME: "ms-user"
+      DB_PASSWORD: "ms-user-pass"
+      DB_NAME: "ms_user"
+    networks:
+      - nesjs-network
+    depends_on:
+      - queue
+      - db
+    ports:
+      - 3002:3000
+    volumes:
+      - ./modules/app:/app
+      - /app/node_modules
+networks:
+  nesjs-network:
+volumes:
+  pgdata:

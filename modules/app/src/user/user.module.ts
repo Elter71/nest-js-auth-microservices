@@ -13,7 +13,7 @@ import { UserService } from './user.service';
         name: 'AUTH_CLIENT',
         transport: Transport.REDIS,
         options: {
-          url: 'redis://localhost:6379',
+          url: `${process.env.REDIS_URL}`,
         },
       },
     ]),

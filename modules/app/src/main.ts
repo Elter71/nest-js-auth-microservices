@@ -8,11 +8,11 @@ async function bootstrap() {
   app.connectMicroservice({
     transport: Transport.REDIS,
     options: {
-      url: 'redis://localhost:6379',
+      url: `${process.env.REDIS_URL}`,
     },
   });
 
   await app.startAllMicroservicesAsync();
-  await app.listen(3010);
+  await app.listen(3000);
 }
 bootstrap();
