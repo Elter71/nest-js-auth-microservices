@@ -1,11 +1,17 @@
 version: "3.9"
 services:
   gateway:
+#    TODO dodanie nginx config for app/auth services
     image: "nginx:1.21.4"
+    depends_on:
+      - app
+      - auth
     networks:
       - nesjs-network
     ports:
       - 3000:80
+    volumes:
+      - ./development/nginx-config.conf:/etc/nginx/conf.d/default.conf
   db:
     image: "postgres:14.1"
     networks:
@@ -31,7 +37,7 @@ services:
       context: ./modules/auth
       target: development
       dockerfile: ../../development/Dockerfile
-    command: yarn start:dev
+    command: yarn start:debug
     environment:
       REDIS_URL: "redis://queue:6379"
     networks:
@@ -39,8 +45,6 @@ services:
     depends_on:
       - queue
       - db
-    ports:
-      - 3001:3000
     volumes:
       - ./modules/auth:/app
       - /app/node_modules
@@ -49,7 +53,7 @@ services:
       context: ./modules/app
       target: development
       dockerfile: ../../development/Dockerfile
-    command: yarn start:dev
+    command: yarn start:debug
     environment:
       REDIS_URL: "redis://queue:6379"
       DB_HOST: "db"
@@ -61,8 +65,6 @@ services:
     depends_on:
       - queue
       - db
-    ports:
-      - 3002:3000
     volumes:
       - ./modules/app:/app
       - /app/node_modules
