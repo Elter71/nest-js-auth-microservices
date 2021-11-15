@@ -11,7 +11,7 @@ async function bootstrap() {
       url: `${process.env.REDIS_URL}`,
     },
   });
-
+  app.setGlobalPrefix('app');
   await app.startAllMicroservicesAsync();
   await app.listen(3000);
 }

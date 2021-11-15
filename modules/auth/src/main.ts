@@ -11,7 +11,7 @@ async function bootstrap() {
       url: `${process.env.REDIS_URL}`,
     },
   });
-
+  app.setGlobalPrefix('auth');
   await app.startAllMicroservicesAsync();
   await app.listen(3000);
   Logger.log('Auth microservice running');
